@@ -3,7 +3,11 @@ set(Binarize_DOWNSTREAM_DEPS "")
 set(heatshrink_VER 0.4)
 set(ZLIB_VER 1.0)
 
-find_package(heatshrink ${heatshrink_VER} REQUIRED)
+add_library(heatshrink::heatshrink_dynalloc STATIC IMPORTED)
+set_target_properties(heatshrink::heatshrink_dynalloc PROPERTIES
+    IMPORTED_LOCATION "/usr/local/lib/libheatshrink_dynamic.a"
+)
+
 find_package(ZLIB ${ZLIB_VER} REQUIRED)
 
 if (NOT BUILD_SHARED_LIBS)
@@ -33,6 +37,7 @@ target_include_directories(${_libname}_binarize
         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src>
         $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
         $<INSTALL_INTERFACE:include>
+	/usr/local/include
 )
 
 target_link_libraries(${_libname}_binarize PRIVATE heatshrink::heatshrink_dynalloc ZLIB::ZLIB)
