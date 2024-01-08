@@ -4,6 +4,8 @@ set(Core_DOWNSTREAM_DEPS "")
 add_library(${_libname}_core
    core.cpp
    core.hpp
+   core_impl.hpp
+   ${PROJECT_BINARY_DIR}/version.rc
    # Add more source files here if needed
 )
 
@@ -20,6 +22,8 @@ if (${PROJECT_NAME}_BUILD_SANITIZERS)
         target_link_options(${_libname}_core PUBLIC /DEBUG)
     endif ()
 endif ()
+
+target_compile_definitions(${_libname}_core PRIVATE LibBGCode_VERSION=R"\(${LibBGCode_VERSION}\)")
 
 generate_export_header(${_libname}_core
    EXPORT_FILE_NAME ${PROJECT_BINARY_DIR}/core/export.h
