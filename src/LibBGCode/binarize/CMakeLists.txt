@@ -1,17 +1,15 @@
-set(Binarize_DOWNSTREAM_DEPS "")
-
-set(heatshrink_VER 0.4)
-set(ZLIB_VER 1.0)
-
 add_library(heatshrink::heatshrink_dynalloc STATIC IMPORTED)
 set_target_properties(heatshrink::heatshrink_dynalloc PROPERTIES
     IMPORTED_LOCATION "/usr/local/lib/libheatshrink_dynamic.a"
 )
 
+set(Binarize_DOWNSTREAM_DEPS "")
+
+set(ZLIB_VER 1.0)
+
 find_package(ZLIB ${ZLIB_VER} REQUIRED)
 
 if (NOT BUILD_SHARED_LIBS)
-    list(APPEND Binarize_DOWNSTREAM_DEPS "heatshrink_${heatshrink_VER}")
     list(APPEND Binarize_DOWNSTREAM_DEPS "ZLIB_${ZLIB_VER}")
     # append all the libs that are required privately for Core
 endif ()
